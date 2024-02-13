@@ -1,10 +1,30 @@
-* {
+/* Colors */
+
+:root {
+    --primary-color: #3a8b33;
+    --secondary-color: #928f8b;
+    --accent-color: rgb(184, 146, 19);
+  
+    --text-color: #ffffff;
+    --background-color: #3f3f3f;
+    --border-color: #ddd;
+}  
+
+/* global */
+
+* {         
+    box-sizing: border-box;
     padding: 0;
     margin: 0;
+    color: var(--text-color);
 }
 
 html {
     scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--background-color);
 }
 
 /* navbar */
@@ -12,22 +32,29 @@ html {
 .navbar {
     position: relative;
     z-index: 0;
-    border: 1px solid red;
+    border: 1vw solid var(--background-color);
+    border-radius: 0 0 10vw 10vw;
     width: 100%;
     padding: 5vw 0;
-    background-color: orange;
+    background-color: var(--secondary-color);
 }
-
 
 .topbar {
     position: relative;
-    box-sizing: border-box;
     width: 30vw;
     height: 30vw;
     margin: 0 auto;
-    border: 1px solid red;
-    background-color: red;
+    border-radius: 3%;
+    background-color: var(--primary-color);
     transition: width 1s ease 0.5s;
+    text-align: center;
+}
+
+.topbar .imagecontainer img {
+    position: absolute;
+    max-width: 15vw;
+    bottom: 1vh;
+    right: 1vh;
 }
 
 @keyframes click {
@@ -47,8 +74,12 @@ html {
 
 .topbar:hover{
 
-    width: 70vw;
+    width: 55vw;
     animation: click 0.5s ease;
+
+    .companyname {
+        padding-left: 1vw;
+    }
 
     .bottombar {
         padding: 3vw 0 1.5vw;
@@ -59,6 +90,16 @@ html {
 
 }
 
+.companyname {
+    text-shadow: 1px 1px 0 #000; 
+    position: absolute;
+    text-align: center;
+    margin: 12px auto;
+    font-size: 4vw;
+    text-transform: uppercase;
+    transition: padding-left 0.5s ease 0.5s;
+}
+
 .bottombar {
     z-index: -1;
     width: 29vw;
@@ -67,7 +108,6 @@ html {
     top: 22vw;
     transition: top 0.5s ease 0.5s, visibility 0.5s ease 0.5s, padding 0.5s ease 0.5s;
     visibility: hidden;
-    border: 1px solid red;
 }
 
 @keyframes changezindex {
@@ -84,7 +124,9 @@ html {
     }
 }
 
-@media only screen and (max-width: 700px){
+/* Media queries for navbar on portable devices */
+
+@media only screen and (max-width: 1200px){
 
     .navbar {
         padding: 7vw 0 11vw;
@@ -102,11 +144,26 @@ html {
         height: 50vw;
     }
 
+    .companyname {
+        font-size: 7vw ;
+    }
+
+    .topbar .imagecontainer img {
+        position: absolute;
+        max-width: 25vw;
+        bottom: 1vh;
+        right: 1vh;
+    }
+    
     .topbar:hover{
         
         width: 50vw;
         animation: none;
-    
+        
+        .companyname {
+            padding-left: 0vw;
+        }
+
         .bottombar {
             padding: 0;
             top: 52vw;
@@ -125,8 +182,204 @@ html {
     padding: 1vw 0;
 }
 
+@media only screen and (max-width: 500px){
+
+    .bottombar ul{
+        padding-top: 3vw;
+        flex-direction: column;
+        gap: 6vw;
+    }
+
+    .navbar{
+        padding-bottom: 35vw;
+    }
+}
+
 .bottombar a {
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 1em;
+    border-radius: 1vh;
+    color: white;
+    font-weight: 500;
+    font-size: 1.06rem;
+    border: 1px solid var(--background-color);
+    padding: 0.5vw;
+}
+
+.bottombar li:hover{
+    animation: pressed 0.5s ease-in-out forwards;
+
+}
+
+.bottombar li:hover > a {
+    color: black;
+    border: 1px solid white;
+    background-color: var(--accent-color);
+}
+
+@keyframes pressed {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.6);
+    }
+}
+
+/* Sections style */
+
+section {
+    margin-top: 10vw;
+    background-color: var(--background-color);
+
+}
+
+section p {
+    font-size: 1.2rem;
+}
+
+section h2 {
+    text-shadow: 3px 3px 0 #000; 
+    color: var(--accent-color);
+    font-size: 10vw;
+    text-align: center;
+    margin: 7vh 0 4vh;
+    text-transform: uppercase;
+}
+
+/* Company Section */
+
+.company {
+    width: 70vw;
+    margin: 0 auto;
+    padding: 0 1vw;
+    text-align: justify;
+    line-height: 1.6rem;
+}
+
+.company img {
+    width: 600px;
+    max-width: 100%;
+    margin: 1vw 0 1vw 1vw;
+    float: right;
+    border: 1vh solid var(--accent-color);
+}
+
+@media only screen and (max-width: 1100px){
+    
+    .company {
+        width: 90vw;
+    }
+}
+
+/* Employees Section */
+
+.employees {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.employee {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.employee img {
+    border-radius: 100%;
+    flex-shrink: 1;
+    width: 50vw;
+    min-width: 150px;
+    max-width: 300px;
+    margin: 3vw auto;
+    box-shadow: 1vh -1vh 0vh 0px var(--accent-color), -1vh -1vh 0vh 0px var(--primary-color);
+}
+
+.employeecontent {
+    flex-shrink: 1;
+    min-width: 150px;
+    max-width: 700px;
+    margin: 0 3vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1vw;
+}
+
+.employeecontent h3 {
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.employeecontent p {
+    text-align: justify;
+}
+
+@media only screen and (max-width: 1100px){
+    .employees{
+        gap: 7vh;
+    }
+    .employee{
+        gap: 1.5vh;
+        flex-direction: column;
+    }
+
+    .employeecontent{
+        gap: 1vh;
+    }
+}
+
+/* Package */
+
+.product {
+    display: flex;
+    flex-direction: column;
+    /*background-image: url("/ressources/images/store_slideshow_large.jpg");*/
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 5vw;
+    max-width: 90%;
+    margin: 0 auto;
+    gap: 5vh;
+    border: 1vh solid var(--accent-color);
+}
+
+.product p {
+    text-align: center;
+    width: 100%;
+    align-self: center;
+    font-size: 3vh;
+    text-transform: uppercase;
+}
+
+.product button {
+    font-weight: 500;
+    background-color: var(--primary-color);
+    padding: 5vh 0;
+    width: 100%;
+    align-self: center;
+    border: none;
+    border-radius: 1vh;
+    font-size: 2rem;
+    text-transform: uppercase;
+}
+
+.product button:active{
+    animation: click 0.3s ease forwards;
+}
+
+@media only screen and (min-width: 500px){
+
+}
+
+/* Footer */
+
+footer {
+    text-align: center;
+    border-radius: 1vh 1vh 0 0;
+    padding: 2vh;
+    background-color: #000;
 }
