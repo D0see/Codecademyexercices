@@ -283,6 +283,7 @@ section h2 {
 }
 
 .employee {
+    flex-shrink: 0;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -290,7 +291,7 @@ section h2 {
 
 .employee img {
     border-radius: 100%;
-    flex-shrink: 1;
+    flex-shrink: 0;
     width: 50vw;
     min-width: 150px;
     max-width: 300px;
@@ -307,9 +308,6 @@ section h2 {
 
 .employee img:hover + .employeecontent {
     background-color: #575757;
-    padding: 0 1vw;
-    margin: 0 2vw;
-    border-radius: 1vh;
 }
 
 .employeecontent {
@@ -317,10 +315,12 @@ section h2 {
     min-width: 150px;
     max-width: 700px;
     margin: 0 3vw;
+    padding: 0 1vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 1vw;
+    border-radius: 1vh;
     transition: background-color 0.35s ease, margin 0.35s ease, padding 0.35s ease;
 }
 
@@ -347,6 +347,7 @@ section h2 {
     }
 
     .employeecontent{
+        padding: 1.5vh;
         gap: 1vh;
     }
 }
