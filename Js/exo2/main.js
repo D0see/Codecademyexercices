@@ -19,6 +19,20 @@ function pAequorFactory(specimenNum = idCount, dna = mockUpStrand()) {
   return {
     specimenNum: idCount,
     dna: mockUpStrand(),
+    calcGoodGenes() {
+      const totalBase = this.dna.length;
+      let numOfCAndG = 0;
+      for (const base of this.dna) {
+        if (base === 'C' || base === 'G') {
+          numOfCAndG++;
+        }
+      }
+      if (((numOfCAndG/totalBase)*100) > 60) {
+        return "Specimen" + this.specimenNum + " at " + Math.ceil((numOfCAndG/totalBase)*100) + " % of good genes, store now !"; 
+      } else {
+      return "Specimen" + this.specimenNum + " at " + Math.ceil((numOfCAndG/totalBase)*100) + " % of good genes, keep mutating..."; 
+      }
+    },
     mutate() {
       const randomDnaBaseIndex = Math.floor(Math.random()*this.dna.length);
       let newRandomBase;
@@ -81,12 +95,12 @@ while (storage.length < 30) {
   let newCreature = pAequorFactory();
   while(!newCreature.willLikelySurvive()) {
     newCreature.mutate();
+    console.log(newCreature.calcGoodGenes());
   }
   storage.push(newCreature);
 }
 
 console.log(storage);
-console.log(storage[29].complementStrand());
 
 function findMostRelated(arr) {
   let bestScore = 0;
@@ -108,6 +122,7 @@ function findMostRelated(arr) {
     }
   }
   console.log(`the 2 closest specimens are ${mostRelated1.specimenNum} and ${mostRelated2.specimenNum} with a score of ${bestScore}%`);
+  console.log(mostRelated1.dna, mostRelated2.dna);
 }
 
 findMostRelated(storage);
