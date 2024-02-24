@@ -14,11 +14,15 @@ const mockUpStrand = () => {
 };
 
 idCount = 0;
-function pAequorFactory(specimenNum = idCount, dna = mockUpStrand()) {
+function pAequorFactory(specimenNum = idCount, dna = mockUpStrand(), _mostRelated) {
   idCount++;
   return {
     specimenNum,
     dna,
+    _mostRelated,
+    set mostRelated(newMostRelated) {
+      this._mostRelated = newMostRelated;
+    },
     calcGoodGenes() {
       const totalBase = this.dna.length;
       let numOfCAndG = 0;
@@ -27,10 +31,10 @@ function pAequorFactory(specimenNum = idCount, dna = mockUpStrand()) {
           numOfCAndG++;
         }
       }
-      if (((numOfCAndG/totalBase)*100) > 60) {
-        return "Specimen" + this.specimenNum + " at " + Math.ceil((numOfCAndG/totalBase)*100) + " % of good genes !"; 
+      if ((Math.ceil((numOfCAndG/totalBase)*100) >= 60)) {
+        return "This specimen has " + Math.ceil((numOfCAndG/totalBase)*100) + " % of C / G bases and is likely to survive."; 
       } else {
-      return "Specimen" + this.specimenNum + " at " + Math.ceil((numOfCAndG/totalBase)*100) + " % of good genes"; 
+      return "This specimen has " + Math.ceil((numOfCAndG/totalBase)*100) + " % of C / G bases and is unlikely to survive."; 
       }
     },
     mutate() {
@@ -100,9 +104,13 @@ function pAequorFactory(specimenNum = idCount, dna = mockUpStrand()) {
 
       const paequorGoodGenes = document.createElement('p');
       paequorGoodGenes.innerHTML = this.calcGoodGenes();
-      paequorGoodGenes.classList.add('GoodGenes');
-      paequorGoodGenes.style.visibility = 'hidden';
+      paequorGoodGenes.classList.add('GoodGenes', 'Hidden');
       paequor.appendChild(paequorGoodGenes);
+
+      const paequorMostRelated = document.createElement('p');
+      paequorMostRelated.innerHTML = '';
+      paequorMostRelated.classList.add('MostRelated', 'Hidden');
+      paequor.appendChild(paequorMostRelated);
 
       const paequorStrand = document.createElement('div'); //-> div
       //paequorStrand.innerHTML = `${this.dna}`;//-> erase
@@ -136,7 +144,6 @@ function pAequorFactory(specimenNum = idCount, dna = mockUpStrand()) {
   
 }
 
-let paequorsOnScreen = document.getElementsByClassName('Paequor');
 
 let storage = []
 
@@ -145,12 +152,45 @@ let storage = []
 const button = document.getElementById('button');
 button.addEventListener('click', function() {
   const testCreature = pAequorFactory();
-  testCreature.createElement();
   storage.push(testCreature);
+  testCreature.createElement();
+  if (storage.length > 1) {
+    const arrOfMostRelated = findMostRelatedForEveryone(storage);
+    let paequorsOnScreen = document.getElementsByClassName('Paequor');
+    console.log(arrOfMostRelated, paequorsOnScreen);
+
+    for (let i = 0; i < paequorsOnScreen.length; i++) {
+      paequorsOnScreen[i].getElementsByTagName('p')[1].innerHTML = `This specimens closest cousin is Paequor#${arrOfMostRelated[i][0]} with a match score of ${arrOfMostRelated[i][1]}%`;
+    }
+  }
+  
 });
 
+console.log(storage);
 
-
+function findMostRelatedForEveryone(arr) {
+  console.log(arr);
+  let arrOfMostRelated = [];
+  let score;
+  let bestScore;
+  for (const creature of storage) {
+    bestScore = 0;
+    for (const comparison of storage) {
+      if (creature === comparison) {
+        continue;
+      } else {
+      score = creature.compareDna(comparison);
+      if (score > bestScore) {
+        bestScore = score;
+        mostRelated = `${comparison.specimenNum}`;
+        }
+      }
+    }
+    console.log(`${creature.specimenNum} is the most related to ${mostRelated} with a match score of ${bestScore}`)
+    arrOfMostRelated.push([mostRelated, bestScore])
+  }
+  return arrOfMostRelated;
+}
 
 /*
 while (storage.length < 30) {
