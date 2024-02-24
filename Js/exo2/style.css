@@ -1,0 +1,97 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    border: 0;
+}
+
+body {
+    background-color:rgba(199, 199, 199, 0.959)
+}
+
+h1 {
+    text-align: center;
+    border: 1px solid red;
+}
+
+.ButtonContainer {
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+}
+
+#button {
+    padding: 25px 0;
+    min-width: 300px;
+    max-width: 500px;
+    margin: 25px auto;
+    border: 1px solid red;
+}
+
+#button:active {
+    background-color: aqua;
+}
+
+#paequors {
+    width: 90%;
+    display: flex;
+    flex-flow: column;
+    margin: 0 auto;
+    border: 1px solid red;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.Paequor {
+    border: 1px solid red;
+    width: 300px;
+    height: 250px;
+    flex-grow: 0;
+    background-color: rgb(29, 29, 29);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    transition: width 1s ease, background-color 1s ease;
+    
+}
+
+.Paequor:active {
+    width: 900px;
+    background-color: rgba(41, 41, 41, 0.952);
+    .Strand {
+        height: 40px;
+        margin: 20px;
+    }
+    .GoodGenes {
+        visibility: visible !important;
+    }
+}
+
+.Paequor .Id {
+    border: 1px solid red;
+    margin: 10px;
+    text-transform: uppercase;
+    color: rgba(199, 199, 199, 0.959);
+}
+
+.Paequor .Strand {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid red;
+    height: 150px;
+    margin: 20px;
+    gap: 10px;
+    justify-content: center;
+    transition: height 1s ease;
+}
+
+
+.Strand p {
+    height: 40px;
+    flex-grow: 0;
+    text-align: center;
+    border: 1px solid red;
+    padding: 10px;
+}

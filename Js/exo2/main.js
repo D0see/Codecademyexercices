@@ -17,8 +17,8 @@ idCount = 0;
 function pAequorFactory(specimenNum = idCount, dna = mockUpStrand()) {
   idCount++;
   return {
-    specimenNum: idCount,
-    dna: mockUpStrand(),
+    specimenNum,
+    dna,
     calcGoodGenes() {
       const totalBase = this.dna.length;
       let numOfCAndG = 0;
@@ -28,9 +28,9 @@ function pAequorFactory(specimenNum = idCount, dna = mockUpStrand()) {
         }
       }
       if (((numOfCAndG/totalBase)*100) > 60) {
-        return "Specimen" + this.specimenNum + " at " + Math.ceil((numOfCAndG/totalBase)*100) + " % of good genes, store now !"; 
+        return "Specimen" + this.specimenNum + " at " + Math.ceil((numOfCAndG/totalBase)*100) + " % of good genes !"; 
       } else {
-      return "Specimen" + this.specimenNum + " at " + Math.ceil((numOfCAndG/totalBase)*100) + " % of good genes, keep mutating..."; 
+      return "Specimen" + this.specimenNum + " at " + Math.ceil((numOfCAndG/totalBase)*100) + " % of good genes"; 
       }
     },
     mutate() {
@@ -84,13 +84,75 @@ function pAequorFactory(specimenNum = idCount, dna = mockUpStrand()) {
         }
       }
       return complementaryStrand;
+    },
+    createElement() {
+      //creates a div for the specimen and populates it
+      const list = document.getElementById('paequors');
+
+      const paequor = document.createElement('div');
+      paequor.classList.add('Paequor');
+      list.appendChild(paequor);
+
+      const paequoriD = document.createElement('h2');
+      paequoriD.innerHTML = `Paequor #${this.specimenNum}`;
+      paequoriD.classList.add('Id')
+      paequor.appendChild(paequoriD);
+
+      const paequorGoodGenes = document.createElement('p');
+      paequorGoodGenes.innerHTML = this.calcGoodGenes();
+      paequorGoodGenes.classList.add('GoodGenes');
+      paequorGoodGenes.style.visibility = 'hidden';
+      paequor.appendChild(paequorGoodGenes);
+
+      const paequorStrand = document.createElement('div'); //-> div
+      //paequorStrand.innerHTML = `${this.dna}`;//-> erase
+      paequorStrand.classList.add('Strand');
+      paequor.appendChild(paequorStrand);
+
+      // creates new p for every base in this.dna and puts them in div Strand
+      for (const base of this.dna) {
+        let tempLetter = document.createElement('p');
+        tempLetter.classList.add('Base');
+        paequorStrand.appendChild(tempLetter);
+        tempLetter.innerHTML= `${base}`;
+
+        switch(base) {
+          case 'A':
+            tempLetter.style.backgroundColor = "#75c873";
+            break;
+          case 'T':
+            tempLetter.style.backgroundColor = "#fe5442";
+            break;
+          case 'C':
+            tempLetter.style.backgroundColor = "#edbea8";
+            break;
+          case 'G':
+            tempLetter.style.backgroundColor = "#6488ea";
+            break;
+        }
+      }
     }
   }
   
 }
 
+let paequorsOnScreen = document.getElementsByClassName('Paequor');
+
 let storage = []
 
+
+//button to add a new Randomly generated specimen
+const button = document.getElementById('button');
+button.addEventListener('click', function() {
+  const testCreature = pAequorFactory();
+  testCreature.createElement();
+  storage.push(testCreature);
+});
+
+
+
+
+/*
 while (storage.length < 30) {
   let newCreature = pAequorFactory();
   while(!newCreature.willLikelySurvive()) {
@@ -101,6 +163,8 @@ while (storage.length < 30) {
 }
 
 console.log(storage);
+
+*/
 
 function findMostRelated(arr) {
   let bestScore = 0;
@@ -124,5 +188,3 @@ function findMostRelated(arr) {
   console.log(`the 2 closest specimens are ${mostRelated1.specimenNum} and ${mostRelated2.specimenNum} with a score of ${bestScore}%`);
   console.log(mostRelated1.dna, mostRelated2.dna);
 }
-
-findMostRelated(storage);
