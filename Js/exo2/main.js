@@ -1,3 +1,5 @@
+document.getElementById('closests').style.display = 'none';
+
 // Returns a random DNA base
 const returnRandBase = () => {
   const dnaBases = ['A', 'T', 'C', 'G'];
@@ -207,6 +209,7 @@ button.addEventListener('click', function() {
 
   //updates the closests h3
   if (storage.length > 1) {
+  document.getElementById('closests').style.display = 'block';
   document.getElementById('closests').innerHTML = findMostRelated(storage);
   }
 
