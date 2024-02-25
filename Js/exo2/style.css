@@ -50,6 +50,7 @@ body {
 }
 
 .Paequor {
+    position: relative;
     border: 1px solid white;
     width: 325px;
     height: 280px;
@@ -87,9 +88,6 @@ body {
         visibility: visible !important;
         color: rgb(199, 199, 199)
     }
-    .Mutate {
-        
-    }
 }
 
 .Paequor .Id {
@@ -101,13 +99,13 @@ body {
 
 .Mutate {
     position: relative;
-    bottom: 10px;
+    top : 22px;
     background-color:rgba(0, 0, 0, 0);
     font-size: 20px;
     border-radius: 5px;
     margin: 5px;
     padding: 5px;
-    border: 1px solid rgb(29, 29, 29);
+    border: 1px solid rgba(29, 29, 29, 0);
     transition: border 0.25s ease, color 0.5s ease-in-out 0.15s, transform 0.05s ease-in-out;
 }
 
@@ -121,7 +119,8 @@ body {
 }
 
 .PaequorPs {
-    position: relative;
+    position: absolute;
+    top: 60px;
     bottom: 10px;
     text-align: center;
     display: flex;
