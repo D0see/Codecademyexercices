@@ -44,6 +44,7 @@ function pAequorFactory(specimenNum = idCount, dna = mockUpStrand(), _mostRelate
         newRandomBase = returnRandBase()
       } while (this.dna[randomDnaBaseIndex] === newRandomBase) 
       this.dna[randomDnaBaseIndex] = newRandomBase;
+      return randomDnaBaseIndex;
     },
     compareDna(obj) {
       const totalBase = this.dna.length;
@@ -102,15 +103,64 @@ function pAequorFactory(specimenNum = idCount, dna = mockUpStrand(), _mostRelate
       paequoriD.classList.add('Id')
       paequor.appendChild(paequoriD);
 
+      const paequorPs = document.createElement('div');
+      paequorPs.classList.add('PaequorPs');
+      paequor.appendChild(paequorPs);
+
       const paequorGoodGenes = document.createElement('p');
       paequorGoodGenes.innerHTML = this.calcGoodGenes();
       paequorGoodGenes.classList.add('GoodGenes', 'Hidden');
-      paequor.appendChild(paequorGoodGenes);
+      paequorPs.appendChild(paequorGoodGenes);
 
       const paequorMostRelated = document.createElement('p');
       paequorMostRelated.innerHTML = '';
       paequorMostRelated.classList.add('MostRelated', 'Hidden');
-      paequor.appendChild(paequorMostRelated);
+      paequorPs.appendChild(paequorMostRelated);
+
+      const paequorMutate = document.createElement('button');
+      paequorMutate.innerHTML = 'MUTATE';
+      paequorMutate.classList.add('Mutate', 'Hidden');
+      paequor.appendChild(paequorMutate);
+      // Mutate listening event assigement 
+      paequorMutate.addEventListener('click', () => {
+        console.log("click");
+        let baseChanged = this.mutate();
+        
+        //updates closests h3
+        if (storage.length > 1) {
+        document.getElementById('closests').innerHTML = findMostRelated(storage);
+        }
+
+        //recalculate the amount of good genes in the paequor
+        paequorGoodGenes.innerHTML = this.calcGoodGenes();
+
+        console.log(baseChanged);
+        let bases = paequorStrand.childNodes;
+        bases[baseChanged].innerHTML = this.dna[baseChanged];
+        //color the modified base the correct color
+        switch(bases[baseChanged].innerHTML) {
+          case 'A':
+            bases[baseChanged].style.backgroundColor = "#75c873";
+            break;
+          case 'T':
+            bases[baseChanged].style.backgroundColor = "#fe5442";
+            break;
+          case 'C':
+            bases[baseChanged].style.backgroundColor = "#edbea8";
+            break;
+          case 'G':
+            bases[baseChanged].style.backgroundColor = "#6488ea";
+            break;
+        };
+        //cousin calculation
+        const arrOfMostRelated = findMostRelatedForEveryone(storage);
+        let paequorsOnScreen = document.getElementsByClassName('Paequor');
+        console.log(arrOfMostRelated, paequorsOnScreen);
+
+          for (let i = 0; i < paequorsOnScreen.length; i++) {
+            paequorsOnScreen[i].getElementsByTagName('p')[1].innerHTML = `This specimens closest cousin is Paequor#${arrOfMostRelated[i][0]} with a match score of ${arrOfMostRelated[i][1]}%`;
+          }
+      });
 
       const paequorStrand = document.createElement('div'); //-> div
       //paequorStrand.innerHTML = `${this.dna}`;//-> erase
@@ -154,6 +204,13 @@ button.addEventListener('click', function() {
   const testCreature = pAequorFactory();
   storage.push(testCreature);
   testCreature.createElement();
+
+  //updates the closests h3
+  if (storage.length > 1) {
+  document.getElementById('closests').innerHTML = findMostRelated(storage);
+  }
+
+  // Cousins calculations 
   if (storage.length > 1) {
     const arrOfMostRelated = findMostRelatedForEveryone(storage);
     let paequorsOnScreen = document.getElementsByClassName('Paequor');
@@ -225,6 +282,7 @@ function findMostRelated(arr) {
       }
     }
   }
-  console.log(`the 2 closest specimens are ${mostRelated1.specimenNum} and ${mostRelated2.specimenNum} with a score of ${bestScore}%`);
-  console.log(mostRelated1.dna, mostRelated2.dna);
+  return `the 2 closest specimens are specimen#${mostRelated1.specimenNum} and specimen#${mostRelated2.specimenNum} with a score of ${bestScore}%`;
 }
+
+

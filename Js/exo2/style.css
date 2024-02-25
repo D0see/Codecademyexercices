@@ -7,7 +7,7 @@
 body {
     position: relative;
     z-index: 1;
-    background-color: antiquewhite;
+    background-color: white;
 }
 
 .ButtonContainer {
@@ -16,16 +16,26 @@ body {
 }
 
 #button {
+    font-size: 25px;
     border: 5px solid black;
     border-radius: 5px;
     padding: 25px 0;
     min-width: 300px;
     max-width: 500px;
     margin: 25px auto;
+    box-shadow: 2px 2px 2px 1px rgb(87, 87, 87);
+    transition: box-shadow 0.05s ease;
 }
 
 #button:active {
-    background-color: aqua;
+    position: relative;
+    left: 2px;
+    top: 2px;
+    box-shadow: none;
+}
+
+#button:hover {
+    cursor: pointer;
 }
 
 #paequors {
@@ -36,20 +46,22 @@ body {
     justify-content: center;
     align-items: center;
     gap: 20px;
+    margin-bottom: 100px;
 }
 
 .Paequor {
-    border: 5px solid white;
-    width: 300px;
-    height: 250px;
+    border: 1px solid white;
+    width: 325px;
+    height: 280px;
     flex-grow: 0;
     background-color: rgb(29, 29, 29);
-    border-radius: 5px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     transition: width 0.75s ease, background-color 1s ease;
+    overflow: hidden;
     
 }
 
@@ -59,10 +71,11 @@ body {
     color: rgba(199, 199, 199, 0);
     transition: color 0.5s ease-in-out 0.15s;
     font-size: 18px;
+    visibility: hidden !important;
 }
 
-.Paequor:active {
-    width: 900px;
+.Paequor:hover {
+    width: 700px;
 
     .Strand {
         height: 40px;
@@ -73,17 +86,52 @@ body {
         z-index: 2;
         visibility: visible !important;
         color: rgb(199, 199, 199)
-
+    }
+    .Mutate {
+        
     }
 }
 
 .Paequor .Id {
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
     text-transform: uppercase;
     color: rgba(199, 199, 199, 0.959);
 }
 
+.Mutate {
+    position: relative;
+    bottom: 10px;
+    background-color:rgba(0, 0, 0, 0);
+    font-size: 20px;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid rgb(29, 29, 29);
+    transition: border 0.25s ease, color 0.5s ease-in-out 0.15s, transform 0.05s ease-in-out;
+}
+
+.Mutate:hover {
+    cursor: pointer;
+    border: 1px solid white;
+}
+
+.Mutate:active {
+    transform: scale(0.95);
+}
+
+.PaequorPs {
+    position: relative;
+    bottom: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap : 10px;
+}
+
 .Paequor .Strand {
+    position : relative;
+    bottom: 30px;
     display: flex;
     flex-wrap: wrap;
     height: 150px;
@@ -96,8 +144,24 @@ body {
 
 .Strand p {
     height: 40px;
+    width: 33px;
     flex-grow: 0;
     text-align: center;
     padding: 10px;
     border-radius: 3px;
+    border: 1px solid white;
+    transition: background-color 0.25s ease;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 25px;
+    color: white;
+    background-color: rgb(29, 29, 29);
+    font-size: 20px;
+    border-radius: 10px 10px 0px 0px;
+    border-top: 1px solid white;
 }
