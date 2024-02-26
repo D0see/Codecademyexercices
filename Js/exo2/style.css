@@ -66,6 +66,21 @@ body {
     
 }
 
+@keyframes pop-up {
+    0% {
+        scale: 0.01;
+
+    }
+
+    80% {
+        scale: 1.1;
+    }
+
+    100% {
+        scale: 1;
+    }
+}
+
 .Hidden {
     position: absolute;
     z-index: -1;
@@ -154,6 +169,7 @@ body {
 
 footer {
     position: fixed;
+    z-index: 2;
     bottom: 0;
     width: 100%;
     text-align: center;

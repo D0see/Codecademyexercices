@@ -99,6 +99,7 @@ function pAequorFactory(specimenNum = idCount, dna = mockUpStrand(), _mostRelate
       const paequor = document.createElement('div');
       paequor.classList.add('Paequor');
       list.appendChild(paequor);
+      paequor.style.animation = 'pop-up 0.35s ease';
 
       const paequoriD = document.createElement('h2');
       paequoriD.innerHTML = `Paequor #${this.specimenNum}`;
